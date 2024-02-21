@@ -1,9 +1,10 @@
-using ToDoList.Infrastructure.DependencyInjection;
+using ToDoList.Persistence.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
+builder.Services.AddDataBaseExtension(builder.Configuration);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

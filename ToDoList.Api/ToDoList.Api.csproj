@@ -12,11 +12,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ToDoList.Infrastructure\ToDoList.Infrastructure.csproj" />
+    <Folder Include="Controllers\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
+    <ProjectReference Include="..\ToDoList.Persistence\ToDoList.Persistence.csproj" />
   </ItemGroup>
 
 </Project>

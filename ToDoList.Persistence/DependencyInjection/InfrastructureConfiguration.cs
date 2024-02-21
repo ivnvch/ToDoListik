@@ -2,11 +2,11 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace ToDoList.Infrastructure.DependencyInjection
+namespace ToDoList.Persistence.DependencyInjection
 {
     public static class InfrastructureConfiguration
     {
-        public static IServiceCollection AddDataBaseExtension(IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddDataBaseExtension(this IServiceCollection services, IConfiguration configuration)
         {
             var connectionString = configuration.GetConnectionString("PostgresSql");
 

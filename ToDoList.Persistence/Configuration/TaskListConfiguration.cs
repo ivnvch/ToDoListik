@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using ToDoList.Domain.Entity;
 
-namespace ToDoList.Infrastructure.Configuration
+namespace ToDoList.Persistence.Configuration
 {
     internal class TaskListConfiguration : IEntityTypeConfiguration<TaskList>
     {

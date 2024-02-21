@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
-namespace ToDoList.Infrastructure
+namespace ToDoList.Persistence
 {
     public class DataContext : DbContext
     {
-        public DataContext(DbContextOptions<DataContext> options): base(options)
+        public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
             Database.EnsureDeleted();
             Database.EnsureCreated();
