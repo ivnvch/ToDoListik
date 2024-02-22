@@ -1,12 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using ToDoList.Domain.Interfaces.Repositories;
+using ToDoList.Persistence.Repositories;
 
 namespace ToDoList.Persistence.DependencyInjection
 {
-    public static class InfrastructureConfiguration
+    public static class DependencyInjection
     {
-        public static IServiceCollection AddDataBaseExtension(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddPersistence(this IServiceCollection services, IConfiguration configuration)
         {
             var connectionString = configuration.GetConnectionString("PostgresSql");
 
@@ -22,7 +24,7 @@ namespace ToDoList.Persistence.DependencyInjection
 
         private static void RegisterRepository(this IServiceCollection services)
         {
-
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
         }
     }
 }
