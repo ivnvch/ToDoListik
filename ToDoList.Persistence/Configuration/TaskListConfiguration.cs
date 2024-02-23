@@ -4,7 +4,7 @@ using ToDoList.Domain.Entity;
 
 namespace ToDoList.Persistence.Configuration
 {
-    internal class TaskListConfiguration : IEntityTypeConfiguration<TaskList>
+    public class TaskListConfiguration : IEntityTypeConfiguration<TaskList>
     {
         public void Configure(EntityTypeBuilder<TaskList> builder)
         {
@@ -17,10 +17,11 @@ namespace ToDoList.Persistence.Configuration
                 .IsRequired()
                 .HasMaxLength(3000);
 
-            builder.HasMany(x => x.Tasks)
+            builder.HasMany(x => x.SingleTasks)
                 .WithOne(x => x.TaskList)
-                .HasForeignKey(x => x.TaskList.Id)
-                .HasPrincipalKey(x => x.Id);
+                .HasForeignKey(x => x.TaskListId)
+                .HasPrincipalKey(x => x.Id)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

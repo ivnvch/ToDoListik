@@ -1,8 +1,9 @@
 ﻿using MediatR;
+using ToDoList.Domain.Result;
 
 namespace ToDoList.Application.Abstraction.Messaging
 {
-    public interface ICommand<out TResponse> : IRequest<TResponse>
+    public interface ICommand<TResponse> : IRequest<BaseResult<TResponse>>
     {
     }
 }

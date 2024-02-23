@@ -2,12 +2,13 @@
 
 namespace ToDoList.Domain.Entity
 {
-    public class User : IEntity
+    public class User : IEntity<long>
     {
-        public Guid Id { get; set; }
+        public long Id { get; set; }
         public string Name { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
-        public ICollection<TaskList> TaskLists { get; set; } = new List<TaskList>();
-        public ICollection<SingleTask> Tasks { get; set; } = new List<SingleTask>();
+        public string Password { get; set;} = string.Empty;
+        public List<TaskList> TaskList { get; set; }
+        public UserToken Token { get; set; }
     }
 }
