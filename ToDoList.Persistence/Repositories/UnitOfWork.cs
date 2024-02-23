@@ -9,6 +9,7 @@ namespace ToDoList.Persistence.Repositories
         private ISingleTaskRepository _singleTaskRepository;
         private ITaskListRepository _taskListRepository;
         private IUserRepository _userRepository;
+        private IUserTokenRepository _userTokenRepository;
 
         public UnitOfWork(DataContext context)
         {
@@ -54,7 +55,20 @@ namespace ToDoList.Persistence.Repositories
             }
         }
 
-        public async Task SaveChangesAsync(CancellationToken cancellationToken = default)
+        public IUserTokenRepository UserTokenRepository
+        {
+            get
+            {
+                if (_userTokenRepository == null)
+                {
+                    _userTokenRepository = new UserTokenRepository(_context);
+                }
+
+                return _userTokenRepository;
+            }
+        }
+
+        public async Task SaveChangesAsync(CancellationToken cancellationToken)
         {
             await _context.SaveChangesAsync(cancellationToken);
         }

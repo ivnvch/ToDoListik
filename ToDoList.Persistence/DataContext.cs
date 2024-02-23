@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Reflection;
+using ToDoList.Domain.Entity;
 
 namespace ToDoList.Persistence
 {
@@ -7,13 +8,13 @@ namespace ToDoList.Persistence
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
-            Database.EnsureDeleted();
+            //Database.EnsureDeleted();
             Database.EnsureCreated();
         }
 
-        //DbSet<User> Users { get; set; } = null!;
-        //DbSet<SingleTask> Tasks { get; set; } = null!;
-        //DbSet<TaskList> TasksList { get; set; } = null!;
+        public DbSet<User> Users { get; set; } = null!;
+        public DbSet<SingleTask> SingleTasks { get; set; } = null!;
+        public DbSet<TaskList> TasksList { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

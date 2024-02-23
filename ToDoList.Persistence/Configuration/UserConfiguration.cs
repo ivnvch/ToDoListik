@@ -17,15 +17,28 @@ namespace ToDoList.Persistence.Configuration
                 .IsRequired()
                 .HasMaxLength(50);
 
-            builder.HasMany(x => x.Tasks)
-                .WithOne(x => x.User)
-                .HasForeignKey(x => x.User.Id)
-                .HasPrincipalKey(x => x.Id);
+            //builder.HasMany(x => x.Tasks)
+            //    .WithOne(x => x.User)
+            //    .HasForeignKey(x => x.UserId)
+            //    .HasPrincipalKey(x => x.Id)
+            //    .OnDelete(DeleteBehavior.Cascade);
 
-            builder.HasMany(x => x.TaskLists)
+            builder.HasMany(x => x.TaskList)
                 .WithOne(x => x.User)
-                .HasForeignKey(x => x.User.Id)
-                .HasPrincipalKey(x => x.Id);
+                .HasForeignKey(x => x.UserId)
+                .HasPrincipalKey(x => x.Id)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            //builder.HasData(new List<User>
+            //{
+            //    new User()
+            //    {
+            //        Id = Guid.NewGuid(),
+            //        Email = "whyNot",
+            //        Password = "password",
+            //        Name = "Dmitry"
+            //    }
+            //});
         }
     }
 }

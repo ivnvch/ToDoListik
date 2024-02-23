@@ -10,11 +10,13 @@ namespace ToDoList.Persistence.DependencyInjection
     {
         public static IServiceCollection AddPersistence(this IServiceCollection services, IConfiguration configuration)
         {
-            var connectionString = configuration.GetConnectionString("PostgresSql");
+            //var connectionString = configuration.GetConnectionString("PostgresSql");
+            var connectionString = configuration.GetConnectionString("MSSQL");
 
             services.AddDbContext<DataContext>(options =>
             {
-                options.UseNpgsql(connectionString);
+                //options.UseNpgsql(connectionString);
+                options.UseSqlServer(connectionString);
             });
 
             services.RegisterRepository();
