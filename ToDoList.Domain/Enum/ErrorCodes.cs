@@ -15,5 +15,8 @@
         InternalServerError = 31,
 
         ProfileNotFound = 41,
+
+        TaskListNotFound = 51,
+
     }
 }
