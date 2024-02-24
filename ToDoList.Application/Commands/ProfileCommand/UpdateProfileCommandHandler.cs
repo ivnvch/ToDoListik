@@ -54,7 +54,7 @@ namespace ToDoList.Application.Commands.ProfileCommand
                 {
                     ErrorMessage = "InternalServerError",
                     ErrorCode = (int)ErrorCodes.InternalServerError
-                }; ;
+                };
             }
         }
     }
