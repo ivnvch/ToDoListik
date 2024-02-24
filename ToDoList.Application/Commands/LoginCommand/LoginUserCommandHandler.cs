@@ -10,7 +10,7 @@ using ToDoList.Domain.Interfaces.Repositories;
 using ToDoList.Domain.Interfaces.Services;
 using ToDoList.Domain.Result;
 
-namespace ToDoList.Application.Commands
+namespace ToDoList.Application.Commands.LoginCommand
 {
     public class LoginUserCommandHandler : ICommandHandler<LoginUserCommand, TokenDto>
     {

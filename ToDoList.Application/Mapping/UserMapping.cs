@@ -9,6 +9,7 @@ namespace ToDoList.Application.Mapping
         public UserMapping()
         {
             CreateMap<User, UserDto>().ReverseMap();
+            CreateMap<User, UserProfileDto>().ReverseMap();
         }
     }
 }

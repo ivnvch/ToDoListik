@@ -1,7 +1,8 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using ToDoList.Application.Commands;
+using ToDoList.Application.Commands.LoginCommand;
+using ToDoList.Application.Commands.RegisterCommand;
 using ToDoList.Domain.Result;
 
 namespace ToDoList.Api.Controllers

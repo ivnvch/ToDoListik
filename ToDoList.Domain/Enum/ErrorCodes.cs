@@ -13,5 +13,7 @@
 
 
         InternalServerError = 31,
+
+        ProfileNotFound = 41,
     }
 }

@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using ToDoList.Application.Mapping;
+using ToDoList.Application.Services;
 using ToDoList.Domain.Interfaces.Services;
-using ToDoList.Infrastructure.Services;
 
 namespace ToDoList.Application.DependencyInjection
 {

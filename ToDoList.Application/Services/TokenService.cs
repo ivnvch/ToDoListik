@@ -11,7 +11,7 @@ using ToDoList.Domain.Interfaces.Services;
 using ToDoList.Domain.Result;
 using ToDoList.Domain.Settings;
 
-namespace ToDoList.Infrastructure.Services
+namespace ToDoList.Application.Services
 {
     public class TokenService : ITokenService
     {
@@ -68,7 +68,7 @@ namespace ToDoList.Infrastructure.Services
             return claimsPrincipal;
         }
 
-        public async Task<BaseResult<TokenDto>> RefreshToken(TokenDto tokenDto,CancellationToken cancellationToken)
+        public async Task<BaseResult<TokenDto>> RefreshToken(TokenDto tokenDto, CancellationToken cancellationToken)
         {
             string accessToken = tokenDto.AccessToken;
             string refreshToken = tokenDto.RefreshToken;
@@ -102,5 +102,6 @@ namespace ToDoList.Infrastructure.Services
                 }
             };
         }
+
     }
 }
