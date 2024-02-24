@@ -9,7 +9,7 @@ using ToDoList.Domain.Result;
 
 
 
-namespace ToDoList.Application.Commands
+namespace ToDoList.Application.Commands.RegisterCommand
 {
     public class RegisterUserCommandHandler : ICommandHandler<RegisterUserCommand, UserDto>
     {
@@ -26,7 +26,7 @@ namespace ToDoList.Application.Commands
         {
             if (request.Password != request.ConfirmPassword)
             {
-                return new Domain.Result.BaseResult<UserDto>()
+                return new BaseResult<UserDto>()
                 {
                     ErrorMessage = "Password not confirm",
                     ErrorCode = (int)ErrorCodes.PasswordNotEqualsConfirmPassword,
@@ -35,11 +35,11 @@ namespace ToDoList.Application.Commands
 
             try
             {
-                var response = await _unitOfWork.UserRepository.FindByConditions(x => x.Email == request.email, cancellationToken).Result.FirstOrDefaultAsync();
+                var response = await _unitOfWork.UserRepository.FindByConditions(x => x.Email == request.Email, cancellationToken).Result.FirstOrDefaultAsync();
 
-                if (response is not null) 
+                if (response is not null)
                 {
-                    return new Domain.Result.BaseResult<UserDto>
+                    return new BaseResult<UserDto>
                     {
                         ErrorCode = (int)ErrorCodes.UserIsAlreadyExists,
                         ErrorMessage = "User is already exists",
@@ -48,7 +48,7 @@ namespace ToDoList.Application.Commands
 
                 response = new Domain.Entity.User()
                 {
-                    Email = request.email,
+                    Email = request.Email,
                     Password = HashPasswordExtension.HashPassword(request.Password),
                 };
 
@@ -56,7 +56,7 @@ namespace ToDoList.Application.Commands
 
                 await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-                return new Domain.Result.BaseResult<UserDto>
+                return new BaseResult<UserDto>
                 {
                     Data = _mapper.Map<UserDto>(response),
                 };

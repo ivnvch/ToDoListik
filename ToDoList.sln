@@ -17,11 +17,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDoList.Infrastructure", "
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{EE0A71AA-B34D-4B46-B5BA-46F1C9EB1754}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDoList.Application", "ToDoList.Application\ToDoList.Application.csproj", "{9959FF69-50DC-4DE4-BF0B-2A77DA924D60}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDoList.Application", "ToDoList.Application\ToDoList.Application.csproj", "{9959FF69-50DC-4DE4-BF0B-2A77DA924D60}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Persistence", "Persistence", "{82A3B18D-6D71-493E-BFC7-BE2365713D90}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDoList.Persistence", "ToDoList.Persistence\ToDoList.Persistence.csproj", "{4E79EF83-14D9-4933-AA8F-7997B03AED23}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDoList.Persistence", "ToDoList.Persistence\ToDoList.Persistence.csproj", "{4E79EF83-14D9-4933-AA8F-7997B03AED23}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
