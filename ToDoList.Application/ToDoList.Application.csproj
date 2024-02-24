@@ -19,6 +19,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Commands\SingleTaskCommand\Update\" />
+    <Folder Include="Commands\SingleTaskCommand\Delete\" />
     <Folder Include="Validations\" />
   </ItemGroup>
 
