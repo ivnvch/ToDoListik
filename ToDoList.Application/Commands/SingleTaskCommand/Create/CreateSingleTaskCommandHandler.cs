@@ -10,7 +10,7 @@ using TaskStatus = ToDoList.Domain.Enum.TaskStatus;
 
 namespace ToDoList.Application.Commands.SingleTaskCommand.Create
 {
-    public class CreateSingleTaskCommandHandler : ICommandHandler<CreateSingleTaskCommand, SingleTaskDto>
+    public class CreateSingleTaskCommandHandler : ICommandHandler<CreateSingleTaskCommand, CreateSingleTaskDto>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
@@ -20,37 +20,32 @@ namespace ToDoList.Application.Commands.SingleTaskCommand.Create
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-        public async Task<BaseResult<SingleTaskDto>> Handle(CreateSingleTaskCommand request, CancellationToken cancellationToken)
+        public async Task<BaseResult<CreateSingleTaskDto>> Handle(CreateSingleTaskCommand request, CancellationToken cancellationToken)
         {
             try
             {
-                var getUserForEmail = await _unitOfWork.UserRepository.FindByConditions(x => x.Email == request.Email, cancellationToken)
-                    .Result.FirstOrDefaultAsync();
+                SingleTask singleTask = new SingleTask();
 
-                SingleTask singleTask = new SingleTask() 
-                { 
-                    Name = request.Name,
-                    Description = request.Description,
-                    Status = TaskStatus.expectation,
-                    DateCreated = DateTime.UtcNow,
-                    TaskListId = getUserForEmail.TaskList
-
-                };
-                
+                singleTask.Name = request.Name;
+                singleTask.Description = request.Description;
+                singleTask.Status = TaskStatus.expectation;
+                singleTask.DateCreated = DateTime.UtcNow;
+                singleTask.TaskListId = request.TaskListId;
+                //singleTask.UserId = getUserForEmail.Id;
                 
 
                 await _unitOfWork.SingleTaskRepository.CreateAsync(singleTask, cancellationToken);
                 await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-                return new BaseResult<SingleTaskDto>
+                return new BaseResult<CreateSingleTaskDto>
                 {
-                    Data = _mapper.Map<SingleTaskDto>(singleTask),
+                    Data = _mapper.Map<CreateSingleTaskDto>(singleTask),
                 };
 
             }
             catch (Exception ex)
             {
-                return new BaseResult<SingleTaskDto>
+                return new BaseResult<CreateSingleTaskDto>
                 {
                     ErrorCode = (int)ErrorCodes.InternalServerError,
                     ErrorMessage = ex.Message,

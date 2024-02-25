@@ -11,6 +11,7 @@ namespace ToDoList.Application.DependencyInjection
         {
             services.AddAutoMapper(typeof(UserMapping));
             services.AddAutoMapper(typeof(TaskListMapping));
+            services.AddAutoMapper(typeof(SingleTaskMapping));
 
             var assembly = typeof(DependencyInjection).Assembly;
             services.AddMediatR(configuration => configuration.RegisterServicesFromAssembly(assembly));

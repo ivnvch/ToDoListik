@@ -3,7 +3,5 @@ using ToDoList.Application.Dto.SingleTask;
 
 namespace ToDoList.Application.Commands.SingleTaskCommand.Create
 {
-    public record CreateSingleTaskCommand(long id, string Email, string Name, string Description, DateTime DateCreated, string TaskStatus) : ICommand<SingleTaskDto>
-    {
-    }
+    public record CreateSingleTaskCommand(long TaskListId, string Name, string Description, DateTime DateCreated) : ICommand<CreateSingleTaskDto>;
 }
