@@ -62,7 +62,7 @@ namespace ToDoList.Application.Commands.LoginCommand
                 var claims = new List<Claim>()
                  {
                     new Claim(ClaimTypes.Email, response.Email),
-                    //new Claim(ClaimTypes., "User"),
+                    new Claim("Id", response.Id.ToString(), ClaimValueTypes.Integer64),
                  };
 
                 var accessToken = _tokenService.GenerateAccessToken(claims);

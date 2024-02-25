@@ -25,16 +25,22 @@ namespace ToDoList.Application.Commands.SingleTaskCommand.Create
             try
             {
                 SingleTask singleTask = new SingleTask();
-
+               
                 singleTask.Name = request.Name;
                 singleTask.Description = request.Description;
                 singleTask.Status = TaskStatus.expectation;
                 singleTask.DateCreated = DateTime.UtcNow;
                 singleTask.TaskListId = request.TaskListId;
-                //singleTask.UserId = getUserForEmail.Id;
-                
 
                 await _unitOfWork.SingleTaskRepository.CreateAsync(singleTask, cancellationToken);
+              
+                TaskStatusHistory taskStatusHistory = new TaskStatusHistory()
+                {
+                    SingleTaskId = singleTask.Id,
+                    TaskStatus = TaskStatus.expectation,
+                };
+                await _unitOfWork.TaskStatusHistoryRepository.CreateAsync(taskStatusHistory, cancellationToken);
+
                 await _unitOfWork.SaveChangesAsync(cancellationToken);
 
                 return new BaseResult<CreateSingleTaskDto>

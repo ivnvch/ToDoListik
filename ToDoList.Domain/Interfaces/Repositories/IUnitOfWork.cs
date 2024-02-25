@@ -6,6 +6,7 @@
         ITaskListRepository TaskListRepository { get; }
         IUserRepository UserRepository { get; }
         IUserTokenRepository UserTokenRepository { get; }
+        ITaskStatusHistoryRepository TaskStatusHistoryRepository { get; }
 
         Task SaveChangesAsync(CancellationToken cancellationToken = default);
     }

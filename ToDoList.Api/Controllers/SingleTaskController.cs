@@ -4,10 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using ToDoList.Application.Commands.SingleTaskCommand.Create;
 using ToDoList.Application.Commands.SingleTaskCommand.Delete;
 using ToDoList.Application.Commands.SingleTaskCommand.Update;
-using ToDoList.Application.Commands.TaskListCommand.Delete;
-using ToDoList.Application.Commands.TaskListCommand.Update;
 using ToDoList.Application.Dto.SingleTask;
-using ToDoList.Application.Dto.TaskList;
 using ToDoList.Domain.Result;
 
 namespace ToDoList.Api.Controllers

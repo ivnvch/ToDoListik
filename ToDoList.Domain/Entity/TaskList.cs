@@ -9,7 +9,7 @@ namespace ToDoList.Domain.Entity
         public string Description { get; set; } = string.Empty;
         public long UserId { get; set; }
         public User User { get; set; }
-        public List<SingleTask> SingleTasks { get; set;}
+        public List<SingleTask> SingleTask { get; set;}
 
     }
 }

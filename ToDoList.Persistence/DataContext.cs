@@ -8,10 +8,11 @@ namespace ToDoList.Persistence
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
-            //Database.EnsureDeleted();
+           // Database.EnsureDeleted();
             Database.EnsureCreated();
         }
 
+        public DbSet<TaskStatusHistory> TaskStatuses { get; set; } = null!;
         public DbSet<User> Users { get; set; } = null!;
         public DbSet<SingleTask> SingleTasks { get; set; } = null!;
         public DbSet<TaskList> TasksList { get; set; } = null!;
