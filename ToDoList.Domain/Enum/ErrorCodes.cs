@@ -18,5 +18,8 @@
 
         TaskListNotFound = 51,
 
+        SingleTaskNotFound = 62,
+
+
     }
 }

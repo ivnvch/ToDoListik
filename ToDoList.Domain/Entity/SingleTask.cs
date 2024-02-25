@@ -11,8 +11,8 @@ namespace ToDoList.Domain.Entity
         public DateTime DateCreated { get; set; }
         public TaskStatus Status { get; set; }
 
-        public long UserId { get; set; }
-        public User User { get; set; }
+        //public long UserId { get; set; }
+        //public User User { get; set; }
 
         public long TaskListId { get; set; }
         public TaskList TaskList { get; set; }
