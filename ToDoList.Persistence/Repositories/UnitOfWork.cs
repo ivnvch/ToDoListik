@@ -10,6 +10,7 @@ namespace ToDoList.Persistence.Repositories
         private ITaskListRepository _taskListRepository;
         private IUserRepository _userRepository;
         private IUserTokenRepository _userTokenRepository;
+        private ITaskStatusHistoryRepository _taskStatusHistoryRepository;
 
         public UnitOfWork(DataContext context)
         {
@@ -26,6 +27,19 @@ namespace ToDoList.Persistence.Repositories
                 }
 
                 return _singleTaskRepository;
+            }
+        }
+
+        public ITaskStatusHistoryRepository TaskStatusHistoryRepository
+        {
+            get
+            {
+                if (_taskStatusHistoryRepository == null)
+                {
+                    _taskStatusHistoryRepository = new TaskStatusHistoryRepository(_context);
+                }
+
+                return _taskStatusHistoryRepository;
             }
         }
 

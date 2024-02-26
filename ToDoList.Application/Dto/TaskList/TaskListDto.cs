@@ -1,4 +1,4 @@
 ﻿namespace ToDoList.Application.Dto.TaskList
 {
-    public record TaskListDto(string Email, string Name, string Description);
+    public record TaskListDto(string Name, string Description);
 }

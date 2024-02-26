@@ -10,7 +10,7 @@ using TaskStatus = ToDoList.Domain.Enum.TaskStatus;
 
 namespace ToDoList.Application.Commands.SingleTaskCommand.Create
 {
-    public class CreateSingleTaskCommandHandler : ICommandHandler<CreateSingleTaskCommand, CreateSingleTaskDto>
+    public sealed class CreateSingleTaskCommandHandler : ICommandHandler<CreateSingleTaskCommand, CreateSingleTaskDto>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
@@ -25,16 +25,24 @@ namespace ToDoList.Application.Commands.SingleTaskCommand.Create
             try
             {
                 SingleTask singleTask = new SingleTask();
-
+               
                 singleTask.Name = request.Name;
                 singleTask.Description = request.Description;
                 singleTask.Status = TaskStatus.expectation;
                 singleTask.DateCreated = DateTime.UtcNow;
                 singleTask.TaskListId = request.TaskListId;
-                //singleTask.UserId = getUserForEmail.Id;
-                
 
                 await _unitOfWork.SingleTaskRepository.CreateAsync(singleTask, cancellationToken);
+
+                await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+                TaskStatusHistory taskStatusHistory = new TaskStatusHistory()
+                {
+                    SingleTaskId = singleTask.Id,
+                    TaskStatus = TaskStatus.expectation,
+                };
+                await _unitOfWork.TaskStatusHistoryRepository.CreateAsync(taskStatusHistory, cancellationToken);
+
                 await _unitOfWork.SaveChangesAsync(cancellationToken);
 
                 return new BaseResult<CreateSingleTaskDto>

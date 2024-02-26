@@ -2,14 +2,13 @@
 using Microsoft.EntityFrameworkCore;
 using ToDoList.Application.Abstraction.Messaging;
 using ToDoList.Application.Dto.TaskList;
-using ToDoList.Application.Dto.User;
 using ToDoList.Domain.Enum;
 using ToDoList.Domain.Interfaces.Repositories;
 using ToDoList.Domain.Result;
 
 namespace ToDoList.Application.Commands.TaskListCommand.Update
 {
-    public class UpdateTaskListCommandHandler : ICommandHandler<UpdateTaskListCommand, TaskListDto>
+    public sealed class UpdateTaskListCommandHandler : ICommandHandler<UpdateTaskListCommand, TaskListDto>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
@@ -24,10 +23,10 @@ namespace ToDoList.Application.Commands.TaskListCommand.Update
         {
             try
             {
-                var taskList = await _unitOfWork.TaskListRepository.FindByConditions(x => x.Id == request.Id, cancellationToken)
+                var response = await _unitOfWork.TaskListRepository.FindByConditions(x => x.Id == request.Id, cancellationToken)
                     .Result.FirstOrDefaultAsync();
 
-                if (taskList is null)
+                if (response is null)
                 {
                     return new BaseResult<TaskListDto> 
                     { 
@@ -36,15 +35,15 @@ namespace ToDoList.Application.Commands.TaskListCommand.Update
                     };
                 }
 
-                taskList.Description = request.Description;
-                taskList.Name = request.Name;
+                response.Description = request.Description;
+                response.Name = request.Name;
 
-                await _unitOfWork.TaskListRepository.UpdateAsync(taskList);
+                await _unitOfWork.TaskListRepository.UpdateAsync(response);
                 await _unitOfWork.SaveChangesAsync(cancellationToken);
 
                 return new BaseResult<TaskListDto>
                 {
-                    Data = _mapper.Map<TaskListDto>(taskList),
+                    Data = _mapper.Map<TaskListDto>(response),
                 };
             }
             catch (Exception)

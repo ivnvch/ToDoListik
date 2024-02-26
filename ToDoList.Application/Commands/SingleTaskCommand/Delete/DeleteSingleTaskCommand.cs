@@ -1,5 +1,4 @@
 ﻿using ToDoList.Application.Abstraction.Messaging;
-using ToDoList.Application.Dto.SingleTask;
 
 namespace ToDoList.Application.Commands.SingleTaskCommand.Delete
 {

@@ -1,7 +1,5 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using System.Net.Http;
-using System.Security.Claims;
 using ToDoList.Application.Abstraction.Messaging;
 using ToDoList.Application.Dto.TaskList;
 using ToDoList.Domain.Entity;
@@ -11,7 +9,7 @@ using ToDoList.Domain.Result;
 
 namespace ToDoList.Application.Commands.TaskListCommand.Create
 {
-    public class CreateTaskListCommandHandler : ICommandHandler<CreateTaskListCommand, TaskListDto>
+    public sealed class CreateTaskListCommandHandler : ICommandHandler<CreateTaskListCommand, TaskListDto>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
@@ -25,12 +23,12 @@ namespace ToDoList.Application.Commands.TaskListCommand.Create
         {
             try
             {
-                var getUserForEmail = await _unitOfWork.UserRepository.FindByConditions(x => x.Email == request.Email, cancellationToken).Result.FirstOrDefaultAsync();
+                var response = await _unitOfWork.UserRepository.FindByConditions(x => x.Email == request.Email, cancellationToken).Result.FirstOrDefaultAsync();
 
                 TaskList taskList = new TaskList();
                 taskList.Name = request.Name;
                 taskList.Description = request.Description;
-                taskList.UserId = getUserForEmail.Id;
+                taskList.UserId = response.Id;
 
                 await _unitOfWork.TaskListRepository.CreateAsync(taskList, cancellationToken);
                 await _unitOfWork.SaveChangesAsync(cancellationToken);

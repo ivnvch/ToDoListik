@@ -17,7 +17,7 @@ namespace ToDoList.Persistence.Configuration
                 .IsRequired()
                 .HasMaxLength(3000);
 
-            builder.HasMany(x => x.SingleTasks)
+            builder.HasMany(x => x.SingleTask)
                 .WithOne(x => x.TaskList)
                 .HasForeignKey(x => x.TaskListId)
                 .HasPrincipalKey(x => x.Id)

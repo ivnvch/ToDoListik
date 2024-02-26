@@ -17,6 +17,12 @@ namespace ToDoList.Persistence.Configuration
                 .IsRequired()
                 .HasMaxLength(3000);
 
+            builder.HasMany(x => x.TaskStatusHistory)
+                .WithOne(x => x.SingleTask)
+                .HasForeignKey(x => x.SingleTaskId)
+                .HasPrincipalKey(x => x.Id)
+                .OnDelete(DeleteBehavior.Cascade);
+
 
         }
     }

@@ -12,16 +12,6 @@ namespace ToDoList.Persistence.Configuration
             builder.Property(x => x.RefreshToken).IsRequired();
             builder.Property(x => x.RefreshTokenExpiryTime).IsRequired();
 
-            //builder.HasData(new List<UserToken>()
-            //{
-            //    new UserToken()
-            //    {
-            //        Id = Guid.NewGuid(),
-            //        RefreshToken = "alksdfj34kjge9340t89ghe",
-            //        RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(7),
-                    
-            //    }
-            //});
         }
     }
 }
