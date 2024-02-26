@@ -2,11 +2,11 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using ToDoList.Domain.Entity;
 
-namespace ToDoList.Infrastructure.Configuration
+namespace ToDoList.Persistence.Configuration
 {
-    public class SingleTaskConfiguration : IEntityTypeConfiguration<SingleTask>
+    public class TaskListConfiguration : IEntityTypeConfiguration<TaskList>
     {
-        public void Configure(EntityTypeBuilder<SingleTask> builder)
+        public void Configure(EntityTypeBuilder<TaskList> builder)
         {
             builder.Property(x => x.Id).ValueGeneratedOnAdd();
 
@@ -17,7 +17,11 @@ namespace ToDoList.Infrastructure.Configuration
                 .IsRequired()
                 .HasMaxLength(3000);
 
-
+            builder.HasMany(x => x.SingleTask)
+                .WithOne(x => x.TaskList)
+                .HasForeignKey(x => x.TaskListId)
+                .HasPrincipalKey(x => x.Id)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

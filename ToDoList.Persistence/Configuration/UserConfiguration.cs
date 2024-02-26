@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using ToDoList.Domain.Entity;
 
-namespace ToDoList.Infrastructure.Configuration
+namespace ToDoList.Persistence.Configuration
 {
     public class UserConfiguration : IEntityTypeConfiguration<User>
     {
@@ -17,15 +17,12 @@ namespace ToDoList.Infrastructure.Configuration
                 .IsRequired()
                 .HasMaxLength(50);
 
-            builder.HasMany(x => x.Tasks)
+            builder.HasMany(x => x.TaskList)
                 .WithOne(x => x.User)
-                .HasForeignKey(x => x.User.Id)
-                .HasPrincipalKey(x => x.Id);
+                .HasForeignKey(x => x.UserId)
+                .HasPrincipalKey(x => x.Id)
+                .OnDelete(DeleteBehavior.Cascade);
 
-            builder.HasMany(x => x.TaskLists)
-                .WithOne(x => x.User)
-                .HasForeignKey(x => x.User.Id)
-                .HasPrincipalKey(x => x.Id);
         }
     }
 }

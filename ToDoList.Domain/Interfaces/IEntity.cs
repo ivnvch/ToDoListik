@@ -1,7 +1,7 @@
 ﻿namespace ToDoList.Domain.Interfaces
 {
-    public interface IEntity
+    public interface IEntity<in T> where T : struct
     {
-        public Guid Id { get; set; }
+        public long Id { get; set; }
     }
 }
