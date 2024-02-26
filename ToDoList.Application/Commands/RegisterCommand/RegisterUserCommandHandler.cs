@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using ToDoList.Application.Abstraction.Messaging;
 using ToDoList.Application.Dto.User;
 using ToDoList.Application.Extensions;
+using ToDoList.Domain.Entity;
 using ToDoList.Domain.Enum;
 using ToDoList.Domain.Interfaces.Repositories;
 using ToDoList.Domain.Result;
@@ -11,7 +12,7 @@ using ToDoList.Domain.Result;
 
 namespace ToDoList.Application.Commands.RegisterCommand
 {
-    public class RegisterUserCommandHandler : ICommandHandler<RegisterUserCommand, UserDto>
+    public sealed class RegisterUserCommandHandler : ICommandHandler<RegisterUserCommand, UserDto>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
@@ -35,7 +36,8 @@ namespace ToDoList.Application.Commands.RegisterCommand
 
             try
             {
-                var response = await _unitOfWork.UserRepository.FindByConditions(x => x.Email == request.Email, cancellationToken).Result.FirstOrDefaultAsync();
+                var response = await _unitOfWork.UserRepository.FindByConditions(x => x.Email == request.Email, cancellationToken)
+                    .Result.FirstOrDefaultAsync();
 
                 if (response is not null)
                 {
@@ -46,7 +48,7 @@ namespace ToDoList.Application.Commands.RegisterCommand
                     };
                 }
 
-                response = new Domain.Entity.User()
+                response = new User()
                 {
                     Email = request.Email,
                     Password = HashPasswordExtension.HashPassword(request.Password),

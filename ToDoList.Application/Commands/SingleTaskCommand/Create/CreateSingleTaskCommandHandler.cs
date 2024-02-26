@@ -10,7 +10,7 @@ using TaskStatus = ToDoList.Domain.Enum.TaskStatus;
 
 namespace ToDoList.Application.Commands.SingleTaskCommand.Create
 {
-    public class CreateSingleTaskCommandHandler : ICommandHandler<CreateSingleTaskCommand, CreateSingleTaskDto>
+    public sealed class CreateSingleTaskCommandHandler : ICommandHandler<CreateSingleTaskCommand, CreateSingleTaskDto>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
@@ -33,7 +33,9 @@ namespace ToDoList.Application.Commands.SingleTaskCommand.Create
                 singleTask.TaskListId = request.TaskListId;
 
                 await _unitOfWork.SingleTaskRepository.CreateAsync(singleTask, cancellationToken);
-              
+
+                await _unitOfWork.SaveChangesAsync(cancellationToken);
+
                 TaskStatusHistory taskStatusHistory = new TaskStatusHistory()
                 {
                     SingleTaskId = singleTask.Id,

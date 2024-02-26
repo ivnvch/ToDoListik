@@ -8,7 +8,7 @@ using ToDoList.Domain.Result;
 
 namespace ToDoList.Application.Commands.ProfileCommand
 {
-    public class UpdateProfileCommandHandler : ICommandHandler<UpdateProfileCommand, UserProfileDto>
+    public sealed class UpdateProfileCommandHandler : ICommandHandler<UpdateProfileCommand, UserProfileDto>
     {
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;

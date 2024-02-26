@@ -2,7 +2,7 @@
 
 namespace ToDoList.Application.Commands.TaskListCommand.Delete
 {
-    public record DeleteTaskListCommand(long Id) : ICommand<bool>
+    public record DeleteTaskListCommand(long Id, long NewListId) : ICommand<bool>
     {
     }
 }

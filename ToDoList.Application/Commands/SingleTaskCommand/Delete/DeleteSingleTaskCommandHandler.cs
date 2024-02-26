@@ -6,7 +6,7 @@ using ToDoList.Domain.Result;
 
 namespace ToDoList.Application.Commands.SingleTaskCommand.Delete
 {
-    public class DeleteSingleTaskCommandHandler : ICommandHandler<DeleteSingleTaskCommand, bool>
+    public sealed class DeleteSingleTaskCommandHandler : ICommandHandler<DeleteSingleTaskCommand, bool>
     {
         private readonly IUnitOfWork _unitOfWork;
 
@@ -17,10 +17,11 @@ namespace ToDoList.Application.Commands.SingleTaskCommand.Delete
 
         public async Task<BaseResult<bool>> Handle(DeleteSingleTaskCommand request, CancellationToken cancellationToken)//globalException may be
         {
-            var getTaskId = await _unitOfWork.SingleTaskRepository.FindByConditions(x => x.Id == request.taskId, cancellationToken)
-                .Result.Where(x => x.TaskListId == request.taskListId).FirstOrDefaultAsync();
+            var response = await _unitOfWork.SingleTaskRepository.FindByConditions(x => x.Id == request.taskId, cancellationToken)
+                .Result.Where(x => x.TaskListId == request.taskListId)
+                   .FirstOrDefaultAsync();
 
-            if (getTaskId is null)
+            if (response is null)
             {
                 return new BaseResult<bool>
                 { 
@@ -29,7 +30,7 @@ namespace ToDoList.Application.Commands.SingleTaskCommand.Delete
                 };
             }
 
-            await _unitOfWork.SingleTaskRepository.DeleteAsync(getTaskId);
+            await _unitOfWork.SingleTaskRepository.DeleteAsync(response);
             await _unitOfWork.SaveChangesAsync();
 
             return new BaseResult<bool>

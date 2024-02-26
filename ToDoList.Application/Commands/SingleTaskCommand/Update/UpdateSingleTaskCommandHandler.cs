@@ -1,10 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
 using ToDoList.Application.Abstraction.Messaging;
 using ToDoList.Application.Dto.SingleTask;
 using ToDoList.Application.Extensions;
-using ToDoList.Application.Queries.GetUserQuery;
 using ToDoList.Domain.Entity;
 using ToDoList.Domain.Enum;
 using ToDoList.Domain.Interfaces.Repositories;
@@ -13,7 +11,7 @@ using TaskStatus = ToDoList.Domain.Enum.TaskStatus;
 
 namespace ToDoList.Application.Commands.SingleTaskCommand.Update
 {
-    public class UpdateSingleTaskCommandHandler : ICommandHandler<UpdateSingleTaskCommand, UpdateSingleTaskDto>
+    public sealed class UpdateSingleTaskCommandHandler : ICommandHandler<UpdateSingleTaskCommand, UpdateSingleTaskDto>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
@@ -26,13 +24,14 @@ namespace ToDoList.Application.Commands.SingleTaskCommand.Update
 
         public async Task<BaseResult<UpdateSingleTaskDto>> Handle(UpdateSingleTaskCommand request, CancellationToken cancellationToken)
         {
-            var getTask = await _unitOfWork.SingleTaskRepository.FindByConditions(x => x.Id == request.TaskId, cancellationToken)
-                .Result.Where(x => x.TaskListId == request.TaskListId).FirstOrDefaultAsync();
+            var response = await _unitOfWork.SingleTaskRepository.FindByConditions(x => x.Id == request.TaskId, cancellationToken)
+                  .Result.Where(x => x.TaskListId == request.TaskListId)
+                    .FirstOrDefaultAsync();
 
-            var taskStatusHistory = await _unitOfWork.TaskStatusHistoryRepository.FindByConditions(x => x.SingleTaskId == getTask.Id, cancellationToken)
-                .Result.FirstOrDefaultAsync();
+            var taskStatusHistory = await _unitOfWork.TaskStatusHistoryRepository.FindByConditions(x => x.SingleTaskId == response.Id, cancellationToken)
+                  .Result.FirstOrDefaultAsync();
 
-            if (getTask is null)
+            if (response is null)
             {
                 return new BaseResult<UpdateSingleTaskDto>
                 {
@@ -41,30 +40,30 @@ namespace ToDoList.Application.Commands.SingleTaskCommand.Update
                 };
             }
 
-            getTask.Name = request.Name;
-            getTask.Description = request.Description;
-            //getTask.Status = request.Status.ToEnum<TaskStatus>();
-            if (request.Status.ToEnum<TaskStatus>() != getTask.Status)
+            response.Name = request.Name;
+            response.Description = request.Description;
+            
+            if (request.Status.ToEnum<TaskStatus>() != response.Status)
             {
-               getTask.Status = request.Status.ToEnum<TaskStatus>();
+               response.Status = request.Status.ToEnum<TaskStatus>();
 
                 TaskStatusHistory taskStatus = new TaskStatusHistory()
                 {
                     DateTimeUpdated = DateTime.UtcNow,
-                    SingleTaskId = getTask.Id,
-                    TaskStatus = getTask.Status,
+                    SingleTaskId = response.Id,
+                    TaskStatus = response.Status,
                 };
 
                await _unitOfWork.TaskStatusHistoryRepository.CreateAsync(taskStatus, cancellationToken);
             }
             
 
-            await _unitOfWork.SingleTaskRepository.UpdateAsync(getTask);
+            await _unitOfWork.SingleTaskRepository.UpdateAsync(response);
             await _unitOfWork.SaveChangesAsync();
 
             return new BaseResult<UpdateSingleTaskDto>
             {
-                Data = _mapper.Map<UpdateSingleTaskDto>(getTask),
+                Data = _mapper.Map<UpdateSingleTaskDto>(response),
             };
 
         }

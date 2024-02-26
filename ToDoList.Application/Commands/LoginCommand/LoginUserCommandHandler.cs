@@ -12,16 +12,14 @@ using ToDoList.Domain.Result;
 
 namespace ToDoList.Application.Commands.LoginCommand
 {
-    public class LoginUserCommandHandler : ICommandHandler<LoginUserCommand, TokenDto>
+    public sealed class LoginUserCommandHandler : ICommandHandler<LoginUserCommand, TokenDto>
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IMapper _mapper;
         private readonly ITokenService _tokenService;
 
-        public LoginUserCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, ITokenService tokenService)
+        public LoginUserCommandHandler(IUnitOfWork unitOfWork, ITokenService tokenService)
         {
             _unitOfWork = unitOfWork;
-            _mapper = mapper;
             _tokenService = tokenService;
         }
 
@@ -30,8 +28,8 @@ namespace ToDoList.Application.Commands.LoginCommand
             try
             {
                 var response = await _unitOfWork.UserRepository
-               .FindByConditions(x => x.Email == request.Email, cancellationToken)
-                 .Result.FirstOrDefaultAsync();
+                    .FindByConditions(x => x.Email == request.Email, cancellationToken)
+                     .Result.FirstOrDefaultAsync();
 
                 if (response is null)
                 {
